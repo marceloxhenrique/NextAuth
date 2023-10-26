@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { UserRegisterForm } from "@/components/userRegisterForm";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -34,6 +35,7 @@ export default function AuthenticationPage() {
               </p>
             </div>
             {/* <UserAuthForm /> */}
+            <UserRegisterForm></UserRegisterForm>
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link
