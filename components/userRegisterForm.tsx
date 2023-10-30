@@ -1,21 +1,17 @@
 "use client";
-import { cn } from "@/lib/utils";
+
 import React, { useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
-
-import { useRouter } from "next/navigation";
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface IUser {
   name: string;
   email: string;
   password: string;
 }
 
-export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
-  const router = useRouter();
+export function UserRegisterForm() {
   const [data, setData] = useState<IUser>({
     name: "",
     email: "",
@@ -25,15 +21,25 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
   async function onSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     setIsLoading(true);
+    const request = await fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const res = await request.json();
 
     setData({ name: "", email: "", password: "" });
     setIsLoading(false);
   }
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div className="grid gap-6">
       <form onSubmit={onSubmit}>
         <div className="grid gap-2">
           <div className="grid gap-1">
