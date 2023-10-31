@@ -29,6 +29,7 @@ export function UserRegisterForm() {
       body: JSON.stringify(data),
     });
     const res = await request.json();
+    console.log(res);
 
     setData({ name: "", email: "", password: "" });
     setIsLoading(false);
