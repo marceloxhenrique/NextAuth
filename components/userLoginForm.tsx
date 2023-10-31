@@ -7,6 +7,8 @@ import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface IUser {
   email: string;
@@ -21,15 +23,28 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
   });
 
   async function onSubmit(e: { preventDefault: () => void }) {
+    console.log(data);
     e.preventDefault();
     setIsLoading(true);
 
+    const res = await signIn<"credentials">("credentials", {
+      ...data,
+      redirect: false,
+    });
+    console.log(res);
+    if (res?.error) {
+      toast.error("Unable to log in");
+    } else {
+      router.push("/dashboard");
+    }
     setData({ email: "", password: "" });
     setIsLoading(false);
   }
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleChange = () => {};
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>

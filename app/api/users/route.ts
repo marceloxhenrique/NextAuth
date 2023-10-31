@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     data: {
       name: name,
       email: email,
-      hashedPassowrd: hashedPassword,
+      hashedPassword: hashedPassword,
     },
   });
 
