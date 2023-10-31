@@ -1,10 +1,11 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 interface IUser {
   name: string;
   email: string;
@@ -17,7 +18,7 @@ export function UserRegisterForm() {
     email: "",
     password: "",
   });
-
+  const router = useRouter();
   async function onSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     setIsLoading(true);
@@ -29,7 +30,12 @@ export function UserRegisterForm() {
       body: JSON.stringify(data),
     });
     const res = await request.json();
-    console.log(res);
+    if (!request.ok) {
+      toast.error("Unable to create User");
+    } else {
+      toast.success(res);
+      router.push("/");
+    }
 
     setData({ name: "", email: "", password: "" });
     setIsLoading(false);
