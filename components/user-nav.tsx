@@ -13,11 +13,9 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useRouter } from "next/navigation";
 
 export function UserNav() {
-  const router = useRouter();
-  const handleClick = async () => {
+  const handleLogoutButton = async () => {
     await signOut();
   };
   return (
@@ -52,7 +50,7 @@ export function UserNav() {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleClick}>
+          <DropdownMenuItem onClick={handleLogoutButton}>
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
