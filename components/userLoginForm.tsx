@@ -23,7 +23,6 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
   });
 
   async function onSubmit(e: { preventDefault: () => void }) {
-    console.log(data);
     e.preventDefault();
     setIsLoading(true);
 
@@ -31,7 +30,6 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
       ...data,
       redirect: false,
     });
-    console.log(res);
     if (res?.error) {
       toast.error("Unable to log in");
     } else {
